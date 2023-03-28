@@ -20,7 +20,7 @@ const EditCard = ({name,link,category}) => {
         //edit card by name
         supabase.
         from('cardv').
-        update({name:(formData.name?formData.name:name),link:(formData.link?formData.link:link),category:formData.category}).
+        update({name:(formData.name?formData.name:name),link:(formData.link?formData.link:link),category:formData.category?formData.category:category}).
         match({name:name})
         .then((data) => {
             console.log(data)

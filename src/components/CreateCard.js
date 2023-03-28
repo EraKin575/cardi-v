@@ -14,18 +14,23 @@ const CreateCard = () => {
     let categories = []
     
     const showModal = () => {
-
-        supabase.
-        from('cardv').
-        select('category').
-        then((data) => {
-            console.log(data)
-            categories = data.data
-        })
-        .catch((error) => {
-            console.log(error)
+        const { data, error } =supabase
+        .from('cardv')
+        .select('category')
+        .then((res)=>{
+            console.log(res)
+            res.data.map((item)=>{
+                categories.push(item.category)
+            })
         })
 
+        console.log(categories)
+      
+    
+
+
+
+       
 
         setOpen(true)
     }
@@ -60,6 +65,7 @@ const CreateCard = () => {
          <Button type="primary"
          style={{
             color: 'black',
+            borderColor: 'black',
          }}
           onClick={showModal}>
         +New
@@ -73,7 +79,12 @@ const CreateCard = () => {
             <Button key="back" onClick={handleCancel}>
                 Return
             </Button>,
-            <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
+            <Button
+            style={{
+                color: 'black',
+                borderColor: 'black',
+            }}
+             key="submit" type="primary" loading={loading} onClick={handleOk}>
                 Submit
             </Button>,
         ]}
@@ -107,7 +118,7 @@ const CreateCard = () => {
             onChange={(e) => setFormData({ ...formData, category: e.target.value })}    
         >
             {categories.map((category) => (
-                <Select.Option value={category.category}>{category.category}</Select.Option>
+                <Select.Option value={category}>{category}</Select.Option>
             ))}
 
 
